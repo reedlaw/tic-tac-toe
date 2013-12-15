@@ -6,10 +6,11 @@ describe Strategy do
       before(:each) do
         board = Board.new
         board.state = [X, X, nil, nil, O, nil, nil, O, nil]
-        subject { described_class.board = board }
+        subject.board = board
       end
       it 'places a third mark' do
         subject.move
+        subject.board.state.should eq([X, X, X, nil, O, nil, nil, O, nil])
       end
     end
   end
