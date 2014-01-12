@@ -1,60 +1,69 @@
 class Board
-  attr_accessor :state, :rows
+  attr_accessor :state
 
   def initialize
-    @state = Array.new(WIDTH * HEIGHT)
-    @rows = initialize_rows
+    @state = [E, E, E,
+              E, E, E,
+              E, E, E]
   end
 
-  def initialize_rows
-    (0..3).each_with_object([]) do |direction, rows|
-      if direction == HORIZONTAL || direction == VERTICAL
-        0.upto(2) { |i| rows << Row.new(type: direction, index: i) }
-      else
-        rows << Row.new(type: direction, index: 0)
+  def == other
+    PERMUTATIONS.any? { |perm|
+      state == perm.map { |p| other.state[p] }
+    }
+  end
+
+  def set_cell(x, y, mark)
+    position = get_position(x, y)
+    @state[position] = mark
+  end
+
+  def winner
+    [X, O].find do |mark| 
+      WIN_MASKS.any? do |win|
+        mask = bitmask(win, mark)
+        compare_masks(win, mask)
       end
     end
   end
 
-  def set_cell(x, y, xo)
-    state[x + y * W] = xo
+  def draw?
+    state.none?(&:zero?) && !winner
   end
 
-  def find_two_in_a_row
-    find_in_a_row(2)
-  end
-
-  def find_three_in_a_row
-    find_in_a_row(3)
-  end
-
-  def find_in_a_row(x)
-    rows.select do |r|
-      marks = state.values_at(*r.get_cells).compact
-      marks.count == x && marks.uniq.count == 1
+  def mark(index)
+    case state[index]
+      when 0
+      " "
+      when 1
+      "X"
+      when 2
+      "O"
     end
   end
 
-  def symmetrical?(board)
-    board.state == state ||
-    board.horizontal_mirror == state
+  def render
+    puts
+    puts " #{mark(0)} | #{mark(1)} | #{mark(2)} "
+    puts "-----------"
+    puts " #{mark(3)} | #{mark(4)} | #{mark(5)} "
+    puts "-----------"
+    puts " #{mark(6)} | #{mark(7)} | #{mark(8)} "
   end
 
-  def horizontal_mirror
-    (0..2).map do |row_index|
-      row = rows.select { |r| r.type == HORIZONTAL && r.index == row_index }.first
-      state.values_at(*row.get_cells).reverse
-    end.flatten
+  private
+
+  def get_position(x, y)
+    x + y * 3
   end
 
-  def vertical_mirror
-    arrays = (0..2).map do |row_index|
-      row = rows.select { |r| r.type == VERTICAL && r.index == row_index }.first
-      state.values_at(*row.get_cells).reverse
+  def bitmask(array, mark)
+    state.inject(0) do |mask, cell|
+      mask * 2 + ((cell==mark) ? 1 : 0)
     end
-    first_row = arrays.map { |a| a[0] }
-    second_row = arrays.map { |a| a[1] }
-    third_row = arrays.map { |a| a[2] }
-    [first_row, second_row, third_row].flatten
+  end
+
+  def compare_masks(mask1, mask2)
+    (mask1 ^ mask2) & mask1 == 0
   end
 end
