@@ -1,8 +1,12 @@
 require 'sinatra'
+require 'sinatra/json'
+require 'byebug'
 require './lib/constants'
-require './lib/board'
-require './lib/node'
-require './lib/game_tree'
+require './lib/entities/board'
+require './lib/entities/node'
+require './lib/entities/game_tree'
+require './lib/interactors/choose_side'
+require './lib/interactors/place_mark'
 
 game_tree = GameTree.new
 game_tree.build
@@ -13,8 +17,9 @@ get '/' do
 end
 
 post '/choice' do
-  puts "choose " + params[:side]
-  best_node = game_tree.root.children.sort.last
-  puts "X moves:"
-  best_node.board.render
+  json ChooseSide.new(params, game_tree).call
+end
+
+post '/move' do
+  json PlaceMark.new(params, game_tree).call
 end

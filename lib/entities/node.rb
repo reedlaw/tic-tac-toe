@@ -10,17 +10,21 @@ class Node
     @children = []
   end
 
+  def best_child
+    if board.depth % 2 == 1
+      @children.sort.first
+    else
+      @children.sort.last
+    end
+  end
+
   def get_score(player)
     return 0 if board.draw?
     return 1 if board.winner == player
     -1
   end
 
-  def depth
-    board.state.reject(&:zero?).count
-  end
-
   def current_player
-    depth % 2 + 1
+    board.depth % 2 + 1
   end
 end

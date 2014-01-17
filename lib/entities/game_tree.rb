@@ -23,7 +23,7 @@ class GameTree
   end
 
   def minimax(node = @root, depth = 0, maximizing_player = X, player = X)
-    if node.depth > 8  || node.board.draw? || node.board.winner
+    if node.board.depth > 8  || node.board.draw? || node.board.winner
       return node.score = node.get_score(player)
     end
     other_player = player == X ? O : X
@@ -41,5 +41,15 @@ class GameTree
       end
     end
     return node.score = alpha
+  end
+
+  def find_child_node(moves)
+    node = @root
+    moves.each_with_index do |move, i|
+      board = Board.new
+      board.state = moves[i]
+      node = node.children.select { |child| child.board == board }.first
+    end
+    node
   end
 end

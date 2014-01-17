@@ -51,6 +51,10 @@ class Board
     puts " #{mark(6)} | #{mark(7)} | #{mark(8)} "
   end
 
+  def depth
+    state.reject(&:zero?).count
+  end
+
   private
 
   def get_position(x, y)
