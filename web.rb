@@ -1,6 +1,5 @@
 require 'sinatra'
 require 'sinatra/json'
-require 'byebug'
 require './lib/constants'
 require './lib/entities/board'
 require './lib/entities/node'
@@ -17,9 +16,11 @@ get '/' do
 end
 
 post '/choice' do
+  puts params
   json ChooseSide.new(params, game_tree).call
 end
 
 post '/move' do
+  puts params
   json PlaceMark.new(params, game_tree).call
 end

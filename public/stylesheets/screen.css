@@ -20,7 +20,6 @@ span {
     background: #eee;
 }
 div.board {
-    display: none;
     background: #eee;
     bottom: 0;
     height: 450px;
