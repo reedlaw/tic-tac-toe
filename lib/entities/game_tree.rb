@@ -43,13 +43,17 @@ class GameTree
     return node.score = alpha
   end
 
-  def find_child_node(moves)
-    node = @root
-    moves.each_with_index do |move, i|
-      board = Board.new
-      board.state = moves[i]
-      node = node.children.select { |child| child.board == board }.first
-    end
+  def find_best_move(boards)
+    board = Board.new
+    node = @root.best_child if boards.shift == @root.board.state
+    while not boards.empty?
+      board.state = boards.shift
+      if boards.empty? || node.board == board
+        node = node.best_child
+      else
+        node = node.children.select { |child| child.board == board }.first
+      end
+    end 
     node
   end
 end

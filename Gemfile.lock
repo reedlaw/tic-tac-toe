@@ -2,6 +2,11 @@ GEM
   remote: https://rubygems.org/
   specs:
     backports (3.4.0)
+    byebug (2.5.0)
+      columnize (~> 0.3.6)
+      debugger-linecache (~> 1.2.0)
+    columnize (0.3.6)
+    debugger-linecache (1.2.0)
     diff-lcs (1.2.5)
     jasmine (2.0.0)
       jasmine-core (~> 2.0.0)
@@ -42,6 +47,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  byebug
   jasmine
   rspec
   sinatra

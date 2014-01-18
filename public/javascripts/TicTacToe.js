@@ -1,60 +1,63 @@
 function TicTacToe() {
   this.boards = [ ['', '', '', '', '' ,'' ,'' ,'', ''] ];
   this.player = 'O'; // defaults to O unless otherwise specified
+  this.getMoveProxy = $.proxy( this.getMove, this )
   $('div.board').hide();
 }
 TicTacToe.prototype.play = function() {
-  $('.xo').on('click', 'span', function() {
-    TicTacToe.prototype.pickSide($(this).html());
+  var that = this;
+  $('div.choice').on( 'click', 'span', function() {
+    that.pickSide( $(this).html() );
   });
 };
 
-TicTacToe.prototype.pickSide = function(side) {
+TicTacToe.prototype.pickSide = function( side ) {
   $('div.choice').hide();
   $('div.board').show();
   this.player = side;
+  if ( side === 'O' ) {
+    this.getComputerMove();
+  } else {
+  }
+  $('td').on( 'click', this.getMoveProxy );
+};
+
+TicTacToe.prototype.getMove = function(e) {
+  this.makeMove( parseInt($(e.target).attr('id')) );
 };
 
 TicTacToe.prototype.getCurrentBoard = function() {
   var cells = [];
-  $.each($('td'), function() {
-    cells.push($.trim($(this).html()));
+  $.each( $('td'), function() {
+    cells.push( $.trim($(this).html()) );
   });
   return cells;
 };
 
-TicTacToe.prototype.makeMove = function(cell) {
-  var board = this.boards[this.boards.length - 1];
+TicTacToe.prototype.makeMove = function( cell ) {
+  var board = this.boards[this.boards.length - 1].slice(0);
   board[cell] = this.player;
-  this.boards.push(board);
+  this.renderBoard( board );
+  this.getComputerMove();
+};
+
+TicTacToe.prototype.getComputerMove = function() {
+  var that = this;
   $.ajax({
     type: 'POST',
     url: '/move',
-    data: { boards: this.boards },
-    success: function(data) {
-      TicTacToe.prototype.renderBoard(data.board);
+    data: { boards: that.boards },
+    success: function( data ) {
+      that.renderBoard( data.board );
     }
   });
 };
 
-TicTacToe.prototype.renderBoard = function(board) {
-  $('td').each(function(index) {
-    mark = '';
-    if (board[index]==1) {
-      mark = 'X';
-    } else if (board[index]==2) {
-      mark = 'O';
-    }
-    $(this).html(mark);
+TicTacToe.prototype.renderBoard = function( board ) {
+  this.boards.push( board );
+  $('td').each( function( index ) {
+    $(this).html( board[index] );
   });
-};
-
-TicTacToe.prototype.getBoards = function() {
-  return this.boards;
-};
-
-TicTacToe.prototype.getPlayer = function() {
-  return this.player;
 };
 
 var game = new TicTacToe();

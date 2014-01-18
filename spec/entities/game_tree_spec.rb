@@ -8,27 +8,53 @@ describe GameTree do
 
   context '#build' do
     it 'creates all possible boards' do
-      subject.build
-      subject.minimax
-      subject.root.children.map(&:score).should eq([0, 0, 0])
-      subject.root.children[1].children.map(&:score).should eq([0, 1, 0, 1, 0])
-      subject.root.children.map { |c| c.children.count }.reduce(:+).should eq(12)
+      GAME_TREE.root.children.map(&:score).should eq([0, 0, 0])
+      GAME_TREE.root.children[1].children.map(&:score).should eq([0, 1, 0, 1, 0])
+      GAME_TREE.root.children.map { |c| c.children.count }.reduce(:+).should eq(12)
     end
   end
 
-  context '#find_child_node' do
+  context '#find_best_move' do
+    it 'returns the best child if AI turn' do
+      boards = [[E, E, E,
+                E, E, E,
+                E, E, E]]
+      board = Board.new
+      board.state = [E, E, E,
+                     E, X, E,
+                     E, E, E]
+      GAME_TREE.find_best_move(boards).board.should eq(board)
+    end
+
     it 'returns the child node with matching board' do
-      subject.build
-      subject.minimax
-      moves = [[E, E, E,
-                E, X, E,
+      boards = [[E, E, E,
+                E, E, E,
                 E, E, E],
                [E, E, E,
                 E, X, E,
-                E, E, O]]
+                E, E, E]]
       board = Board.new
-      board.state = moves.last
-      subject.find_child_node(moves).board.should eq(board)
+      board.state = [O, E, E,
+                     E, X, E,
+                     E, E, E]
+      GAME_TREE.find_best_move(boards).board.should eq(board)
+    end
+
+    it 'returns the child node with matching board' do
+      boards = [[E, E, E,
+                E, E, E,
+                E, E, E],
+               [E, E, E,
+                E, X, E,
+                E, E, E],
+               [O, E, E,
+                E, X, E,
+                E, E, E]]
+      board = Board.new
+      board.state = [O, E, E,
+                     E, X, E,
+                     E, E, X]
+      GAME_TREE.find_best_move(boards).board.should eq(board)
     end
   end
 end

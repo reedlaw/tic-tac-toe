@@ -1,10 +1,10 @@
 require 'sinatra'
 require 'sinatra/json'
+require 'byebug'
 require './lib/constants'
 require './lib/entities/board'
 require './lib/entities/node'
 require './lib/entities/game_tree'
-require './lib/interactors/choose_side'
 require './lib/interactors/place_mark'
 
 game_tree = GameTree.new

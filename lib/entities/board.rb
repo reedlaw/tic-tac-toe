@@ -19,7 +19,7 @@ class Board
   end
 
   def winner
-    [X, O].find do |mark| 
+    [X, O].find do |mark|
       WIN_MASKS.any? do |win|
         mask = bitmask(win, mark)
         compare_masks(win, mask)
@@ -33,11 +33,11 @@ class Board
 
   def mark(index)
     case state[index]
-      when 0
+    when 0
       " "
-      when 1
+    when 1
       "X"
-      when 2
+    when 2
       "O"
     end
   end
@@ -49,6 +49,19 @@ class Board
     puts " #{mark(3)} | #{mark(4)} | #{mark(5)} "
     puts "-----------"
     puts " #{mark(6)} | #{mark(7)} | #{mark(8)} "
+  end
+
+  def to_json
+    state.each_with_object([]) do |cell, array|
+      array << case cell
+               when 0
+                 ''
+               when 1
+                 'X'
+               when 2
+                 'O'
+               end
+    end
   end
 
   def depth
