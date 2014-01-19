@@ -32,14 +32,7 @@ class Board
   end
 
   def mark(index)
-    case state[index]
-    when 0
-      " "
-    when 1
-      "X"
-    when 2
-      "O"
-    end
+    mark_to_s(state[index])
   end
 
   def render
@@ -52,16 +45,13 @@ class Board
   end
 
   def to_json
-    state.each_with_object([]) do |cell, array|
-      array << case cell
-               when 0
-                 ''
-               when 1
-                 'X'
-               when 2
-                 'O'
-               end
+    board = state.each_with_object([]) do |cell, array|
+      array << mark_to_s(cell)
     end
+    json = { board: board }
+    json[:winner] = mark_to_s(winner) if winner
+    json[:draw] = true if draw?
+    json
   end
 
   def depth
@@ -83,6 +73,17 @@ class Board
   end
 
   private
+
+  def mark_to_s(cell)
+    case cell
+    when E
+      ''
+    when X
+      'X'
+    when O
+      'O'
+    end
+  end
 
   def get_position(x, y)
     x + y * 3

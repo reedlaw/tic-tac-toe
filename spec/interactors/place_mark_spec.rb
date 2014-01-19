@@ -92,32 +92,75 @@ describe PlaceMark do
                                            'O', '', ''] })
     end
 
-    it 'returns the AI move' do
-      subject = PlaceMark.new({ boards: {
-                                  '0' => ['', '', '',
-                                          '', '', '',
-                                          '', '', ''],
-                                  '1' => ['', '', '',
-                                          '', 'X', '',
-                                          '', '', ''],
-                                  '2' => ['O', '', '',
-                                          '', 'X', '',
-                                          '', '', ''],
-                                  '3' => ['O', '', 'X',
-                                          '', 'X', '',
-                                          '', '', ''],
-                                  '4' => ['O', '', 'X',
-                                          '', 'X', '',
-                                          'O', '', ''],
-                                  '5' => ['O', '', 'X',
-                                          '', 'X', '',
-                                          'O', '', 'X'] }
-                              },
-                              GAME_TREE)
-      subject.call
-      subject.response.should eq({ board: ['O', '', 'X',
-                                           'O', 'X', '',
-                                           'O', '', 'X'] })
+    context 'AI winner' do
+      it 'returns the AI move and the winner' do
+        subject = PlaceMark.new({ boards: {
+                                    '0' => ['', '', '',
+                                            '', '', '',
+                                            '', '', ''],
+                                    '1' => ['', '', '',
+                                            '', 'X', '',
+                                            '', '', ''],
+                                    '2' => ['O', '', '',
+                                            '', 'X', '',
+                                            '', '', ''],
+                                    '3' => ['O', '', 'X',
+                                            '', 'X', '',
+                                            '', '', ''],
+                                    '4' => ['O', '', 'X',
+                                            '', 'X', '',
+                                            'O', '', ''],
+                                    '5' => ['O', '', 'X',
+                                            '', 'X', '',
+                                            'O', '', 'X'] }
+                                },
+                                GAME_TREE)
+        subject.call
+        subject.response.should eq({ board: ['O', '', 'X',
+                                             'O', 'X', '',
+                                             'O', '', 'X'],
+                                     winner: 'O' })
+      end
+    end
+
+    context 'draw' do
+      it 'returns the AI move and the draw flag' do
+        subject = PlaceMark.new({ boards: {
+                                    '0' => ['', '', '',
+                                            '', '', '',
+                                            '', '', ''],
+                                    '1' => ['', '', '',
+                                            '', 'X', '',
+                                            '', '', ''],
+                                    '2' => ['O', '', '',
+                                            '', 'X', '',
+                                            '', '', ''],
+                                    '3' => ['O', '', 'X',
+                                            '', 'X', '',
+                                            '', '', ''],
+                                    '4' => ['O', '', 'X',
+                                            '', 'X', '',
+                                            'O', '', ''],
+                                    '5' => ['O', '', 'X',
+                                            'X', 'X', '',
+                                            'O', '', ''],
+                                    '6' => ['O', '', 'X',
+                                            'X', 'X', 'O',
+                                            'O', '', ''],
+                                    '7' => ['O', '', 'X',
+                                            'X', 'X', 'O',
+                                            'O', 'X', ''],
+                                    '8' => ['O', 'O', 'X',
+                                            'X', 'X', 'O',
+                                            'O', 'X', ''] }
+                                },
+                                GAME_TREE)
+        subject.call
+        subject.response.should eq({ board: ['O', 'O', 'X',
+                                             'X', 'X', 'O',
+                                             'O', 'X', 'X'],
+                                     draw: true })
+      end
     end
   end
-end 
+end

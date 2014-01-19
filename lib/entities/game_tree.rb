@@ -51,6 +51,7 @@ class GameTree
     while not boards.empty?
       board.state = boards.shift
       node = node.children.select { |child| child.board == board }.first
+      break if board.draw?
       node = node.best_child if boards.empty?
     end
     new_board = node.board.dup

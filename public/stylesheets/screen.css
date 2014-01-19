@@ -6,6 +6,7 @@ body {
 div.choice {
     margin: auto;
     width: 700px;
+    text-align: center;
 }
 div.xo {
     margin: auto;
@@ -37,6 +38,8 @@ table {
     border-collapse: collapse;
 }
 td {
+    cursor: pointer;
+    cursor: hand;
     position: relative;
     width:  150px;
     height: 150px;
@@ -58,4 +61,15 @@ td:first-child {
 }
 td:nth-child(3) {
     border-right-width: 0;
+}
+div.message {
+    margin: auto;
+    width: 800px;
+    text-align: center;
+    z-index: 10000;
+}
+div.fade {
+    background: #e3e3e3;
+    color: #aaa;
+    z-index: -100;
 }
