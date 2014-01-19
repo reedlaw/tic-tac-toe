@@ -54,4 +54,20 @@ describe Board do
       subject.winner.should eq(O)
     end
   end
+
+  context '#depermutate' do
+    it 'permutates a mirrored/rotated board to match another board' do
+      subject.state = [O, E, O,
+                       E, X, E,
+                       E, E, X]
+      board = Board.new
+      board.state = [O, E, X,
+                     E, X, E,
+                     E, E, E]
+      subject.depermutate(board)
+      subject.depermutate(board).should eq([O, E, X,
+                                            E, X, E,
+                                            O, E, E])
+    end
+  end
 end

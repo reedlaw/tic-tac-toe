@@ -44,16 +44,17 @@ class GameTree
   end
 
   def find_best_move(boards)
+    return @root.best_child.board if boards.count == 1
+    boards.shift
     board = Board.new
-    node = @root.best_child if boards.shift == @root.board.state
+    node = @root
     while not boards.empty?
       board.state = boards.shift
-      if boards.empty? || node.board == board
-        node = node.best_child
-      else
-        node = node.children.select { |child| child.board == board }.first
-      end
-    end 
-    node
+      node = node.children.select { |child| child.board == board }.first
+      node = node.best_child if boards.empty?
+    end
+    new_board = node.board.dup
+    new_board.depermutate(board)
+    new_board
   end
 end

@@ -68,6 +68,20 @@ class Board
     state.reject(&:zero?).count
   end
 
+  def depermutate(other)
+    similar_count = 0
+    new_state = @state
+    PERMUTATIONS.each do |perm|
+      perm_state = perm.map { |p| @state[p] }
+      matches = perm_state.zip(other.state).map { |a, b| a == b }.count(true)
+      if matches > similar_count
+        new_state = perm_state
+        similar_count = matches
+      end
+    end
+    @state = new_state
+  end
+
   private
 
   def get_position(x, y)

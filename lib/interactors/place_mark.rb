@@ -7,8 +7,8 @@ class PlaceMark
   end
 
   def call
-    node = @game_tree.find_best_move(@boards)
-    @response = { board: node.board.to_json }
+    board = @game_tree.find_best_move(@boards)
+    @response = { board: board.to_json }
   end
 
   def get_boards(hash)

@@ -23,7 +23,7 @@ describe GameTree do
       board.state = [E, E, E,
                      E, X, E,
                      E, E, E]
-      GAME_TREE.find_best_move(boards).board.should eq(board)
+      GAME_TREE.find_best_move(boards).should eq(board)
     end
 
     it 'returns the child node with matching board' do
@@ -37,7 +37,7 @@ describe GameTree do
       board.state = [O, E, E,
                      E, X, E,
                      E, E, E]
-      GAME_TREE.find_best_move(boards).board.should eq(board)
+      GAME_TREE.find_best_move(boards).should eq(board)
     end
 
     it 'returns the child node with matching board' do
@@ -54,7 +54,7 @@ describe GameTree do
       board.state = [O, E, E,
                      E, X, E,
                      E, E, X]
-      GAME_TREE.find_best_move(boards).board.should eq(board)
+      GAME_TREE.find_best_move(boards).should eq(board)
     end
   end
 end
