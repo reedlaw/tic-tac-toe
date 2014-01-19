@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'byebug'
+gem 'foreman'
 gem 'jasmine'
 gem 'rspec'
 gem 'sinatra'

@@ -1,6 +1,5 @@
 require 'sinatra'
 require 'sinatra/json'
-require 'byebug'
 require './lib/constants'
 require './lib/entities/board'
 require './lib/entities/node'

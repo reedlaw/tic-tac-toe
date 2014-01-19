@@ -1,4 +1,3 @@
-require 'byebug'
 require 'constants'
 require 'entities/board'
 require 'entities/node'
