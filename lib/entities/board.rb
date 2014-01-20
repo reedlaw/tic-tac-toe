@@ -31,19 +31,6 @@ class Board
     state.none?(&:zero?) && !winner
   end
 
-  def mark(index)
-    mark_to_s(state[index])
-  end
-
-  def render
-    puts
-    puts " #{mark(0)} | #{mark(1)} | #{mark(2)} "
-    puts "-----------"
-    puts " #{mark(3)} | #{mark(4)} | #{mark(5)} "
-    puts "-----------"
-    puts " #{mark(6)} | #{mark(7)} | #{mark(8)} "
-  end
-
   def to_json
     board = state.each_with_object([]) do |cell, array|
       array << mark_to_s(cell)
