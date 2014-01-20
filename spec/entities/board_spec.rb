@@ -29,6 +29,7 @@ describe Board do
 
     end
   end
+
   context '#set_cells' do
     it 'sets a board cell at coords {x, y} to either X or O' do
       subject.set_cell(0, 0, X)

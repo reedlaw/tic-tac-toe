@@ -15,11 +15,9 @@ get '/' do
 end
 
 post '/choice' do
-  puts params
   json ChooseSide.new(params, game_tree).call
 end
 
 post '/move' do
-  puts params
   json PlaceMark.new(params, game_tree).call
 end

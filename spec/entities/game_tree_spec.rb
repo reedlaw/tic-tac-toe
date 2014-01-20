@@ -17,8 +17,8 @@ describe GameTree do
   context '#find_best_move' do
     it 'returns the best child if AI turn' do
       boards = [[E, E, E,
-                E, E, E,
-                E, E, E]]
+                 E, E, E,
+                 E, E, E]]
       board = Board.new
       board.state = [E, E, E,
                      E, X, E,
@@ -26,13 +26,13 @@ describe GameTree do
       GAME_TREE.find_best_move(boards).should eq(board)
     end
 
-    it 'returns the child node with matching board' do
+    it 'returns the child node with the best score for the current player' do
       boards = [[E, E, E,
-                E, E, E,
-                E, E, E],
-               [E, E, E,
-                E, X, E,
-                E, E, E]]
+                 E, E, E,
+                 E, E, E],
+                [E, E, E,
+                 E, X, E,
+                 E, E, E]]
       board = Board.new
       board.state = [O, E, E,
                      E, X, E,
@@ -40,16 +40,16 @@ describe GameTree do
       GAME_TREE.find_best_move(boards).should eq(board)
     end
 
-    it 'returns the child node with matching board' do
+    it 'returns the child node with the best score for the current player' do
       boards = [[E, E, E,
-                E, E, E,
-                E, E, E],
-               [E, E, E,
-                E, X, E,
-                E, E, E],
-               [O, E, E,
-                E, X, E,
-                E, E, E]]
+                 E, E, E,
+                 E, E, E],
+                [E, E, E,
+                 E, X, E,
+                 E, E, E],
+                [O, E, E,
+                 E, X, E,
+                 E, E, E]]
       board = Board.new
       board.state = [O, E, E,
                      E, X, E,

@@ -1,10 +1,11 @@
 function TicTacToe() {
   this.boards = [ ['', '', '', '', '' ,'' ,'' ,'', ''] ];
   this.player = 'O'; // defaults to O
-  this.getMoveProxy = $.proxy( this.getMove, this )
+  this.getMoveProxy = $.proxy( this.getMove, this );
   $('div.board').hide();
   $('div.message').hide();
 }
+
 TicTacToe.prototype.play = function() {
   var that = this;
   $('div.choice').on( 'click', 'span', function() {

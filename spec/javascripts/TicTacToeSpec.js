@@ -11,7 +11,7 @@ describe("TicTacToe", function() {
     expect( $('div.board') ).toBeHidden();
   });
 
-  it( "has a hidden message aread", function() {
+  it( "has a hidden message area", function() {
     setFixtures(sandbox({ class: 'message' }));
     game = new TicTacToe();
     expect( $('div.message') ).toBeHidden();
